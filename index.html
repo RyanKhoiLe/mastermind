@@ -94,6 +94,16 @@ and open the template in the editor.
                 currentCol = 0;
                 corPos = 0;
                 corCol = 0;
+                solution = [];
+                nums = [];
+                nums = [1,2,3,4,5,6];
+                
+                for(var i = 0; i < 4; i++){
+                    var random = Math.floor(Math.random() * nums.length);
+                    solution.push(nums[random]);
+                    nums.splice(random,1);
+                    console.log(solution);
+                }
                 board = [];
                 for(var i = 0; i < 10; i++){
                     board.push([0,0,0,0]);
