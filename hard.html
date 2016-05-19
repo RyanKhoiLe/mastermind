@@ -12,9 +12,12 @@ and open the template in the editor.
         <link rel="stylesheet" href="MasterMindCSS.css" type="text/css">
     </head>
     <body>
-        <div> <h1>HELLO AND WELCOME TO MASTERMIND <br></h1>
-              <p>YOU HAVE 10 TRIES TO GUESS THE SECRET PASSWORD <br>
-                  CLICK ON THE COLORS TO INPUT YOUR GUESS FROM LEFT TO RIGHT <br></p>         
+        <div> <h1>WELCOME TO MASTERMIND HARD MODE <br></h1>
+              <p>You have 10 tries to guess the secret password<br>
+              The password is a series of four colors (can repeat!) <br>
+              Click on the colors to input your guess from left to right <br>
+              Then click check to check your guess <br>
+              <a href="hard.html"> Hard mode (with repeats) </a> </p>
             
         </div>
         <div id="UI">
@@ -25,21 +28,24 @@ and open the template in the editor.
             <button id="blue"></button>
             <button id="purple"></button>
             <br>
-            <button id="clear">CLEAR</button>
-            <button id="submit">CHECK</button>
-            <button id="restart">RESTART</button>
+            <button id="undo" class="btn">UNDO</button>
+            <button id="clear" class="btn">CLEAR</button>
+            <button id="submit" class="btn">CHECK</button>
+            <button id="restart" class="btn">RESTART</button>
             <p id="display"> Turn: 1 </p>
         </div>
         <canvas id="myCanvas" width="600" height="460">No canvas</canvas>
         <div id ="instructions">
             <h1>INSTRUCTIONS</h1>
-            <p>YOU MUST GET ALL THE COLORS RIGHT AS WELL AS THEIR POSITIONS <br>
-            IF YOU CORRECTLY GUESS THE RIGHT COLOR IN THE RIGHT POSITION IT WILL TELL YOU ON THE LEFT <br>
-            IF YOU CORRECTLY GUESS A COLOR BUT NOT IN THE RIGHT POSITION IT WILL TELL YOU ON THE RIGHT <br>
-            THERE ARE REPEATED COLORS IN HARD MODE <br>
-            CLICK CLEAR TO CLEAR THE ROW YOU ARE WORKING ON <br>
-            CLICK CHECK ONCE YOU HAVE MADE YOUR GUESS FOR THAT ROW <br>
-            CLICK RESTART TO START A NEW GAME <br></p>
+            <p>You must get all the colors right IN ORDER <br>
+            If you correctly guess the correct color AND in the right position, it will say on the left <br>
+            If you correctly guess the correct color but NOT the position, it will say on the right <br>
+            There ARE repeated colors in hard mode <br>
+            Click clear to clear the entire row you are currently working on <br>
+            Click check to make your guess <br>
+            Click restart to start a new game <br>
+            Click undo to undo your last move
+            </p>
         </div>
         <script>
             var redButton = document.getElementById("red"); //1  
@@ -48,6 +54,7 @@ and open the template in the editor.
             var greenButton = document.getElementById("green"); // 4
             var blueButton = document.getElementById("blue"); //5
             var purpleButton = document.getElementById("purple"); //6
+            var undoButton = document.getElementById("undo");
             var clearButton = document.getElementById("clear"); 
             var checkButton = document.getElementById("submit");
             var restartButton = document.getElementById("restart");
@@ -67,12 +74,14 @@ and open the template in the editor.
             blueButton.addEventListener("click",function(){addColor("blue");},false);
             purpleButton.addEventListener("click",function(){addColor("purple");},false);
             
+            undoButton.addEventListener("click",undoSelect,false);
             clearButton.addEventListener("click",clearRow,false);
             checkButton.addEventListener("click",checkRow,false);
             restartButton.addEventListener("click",resetGame,false);
             
             var canvas = document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");
+            ctx.strokeStyle = "white";
             var currentRow = 0;
             var currentCol = 0;
             var corPos = 0;
@@ -86,18 +95,27 @@ and open the template in the editor.
                     ctx.strokeRect(j * 40, i * 40, 40, 40);
                 }
             }
-            ctx.strokeStyle = "white";
+            function undoSelect(){
+                currentCol--;
+                if(currentCol < 0){
+                    currentCol = 0;
+                }
+                board[currentRow][currentCol] = 0;
+                updatePaint();
+            }
             function resetGame(){
                 currentRow = 0;
                 currentCol = 0;
                 corPos = 0;
                 corCol = 0;
                 solution = [];
-                
+                nums = [];
+                nums = [1,2,3,4,5,6];
                 
                 for(var i = 0; i < 4; i++){
-                    var random = Math.floor(Math.random() * 6 + 1);
-                    solution.push(random);
+                    var random = Math.floor(Math.random() * nums.length);
+                    solution.push(nums[random]);
+                    nums.splice(random,1);
                     console.log(solution);
                 }
                 board = [];
@@ -129,7 +147,7 @@ and open the template in the editor.
                         loseGame();
                         return;
                 }
-                for(var i = 0; i < solution.length; i++){
+                for(var i = 0; i < solution.length; i++){ //check all solutions for positions only, then color
                     for(var j = 0; j < board[0].length; j++){
                         if(board[currentRow][j] === solution[i]){
                             corCol++;
@@ -137,7 +155,7 @@ and open the template in the editor.
                                 corPos++;
                                 corCol--;
                             }
-                            break;
+                            //i++;
                         }
                         else if(board[currentRow][j] === 0){
                             zeroCount++;
@@ -229,6 +247,32 @@ and open the template in the editor.
                 console.log('lose');
                 ctx.strokeText("SORRY YOU LOST!",50, 450);
                 display.innerHTML = "YOU LOST! THE SOLUTION WAS: " + solution;
+                for(var i = 0; i < solution.length; i++){
+                    switch(solution[i]){
+                        case 1:
+                                ctx.fillStyle = "red";
+                                break;
+                            case 2:
+                                ctx.fillStyle = "orange";
+                                break;
+                            case 3: 
+                                ctx.fillStyle = "yellow";
+                                break;
+                            case 4:
+                                ctx.fillStyle = "green";
+                                break;
+                            case 5:
+                                ctx.fillStyle = "blue";
+                                break;
+                            case 6:
+                                ctx.fillStyle = "purple";
+                                break;
+                            default:
+                                ctx.fillStyle = "black";
+                    }
+                    ctx.strokeText("Solution: ", 320, 190);
+                    ctx.fillRect(320 + 40 * i, 200, 20, 20);
+                }
             }
         </script>
     </body>
