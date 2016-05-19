@@ -26,6 +26,7 @@ and open the template in the editor.
             <button id="blue"></button>
             <button id="purple"></button>
             <br>
+            <button id="undo">UNDO</button>
             <button id="clear">CLEAR</button>
             <button id="submit">CHECK</button>
             <button id="restart">RESTART</button>
@@ -49,6 +50,7 @@ and open the template in the editor.
             var greenButton = document.getElementById("green"); // 4
             var blueButton = document.getElementById("blue"); //5
             var purpleButton = document.getElementById("purple"); //6
+            var undoButton = document.getElementById("undo");
             var clearButton = document.getElementById("clear"); 
             var checkButton = document.getElementById("submit");
             var restartButton = document.getElementById("restart");
@@ -70,6 +72,7 @@ and open the template in the editor.
             blueButton.addEventListener("click",function(){addColor("blue");},false);
             purpleButton.addEventListener("click",function(){addColor("purple");},false);
             
+            undoButton.addEventListener("click",undoSelect,false);
             clearButton.addEventListener("click",clearRow,false);
             checkButton.addEventListener("click",checkRow,false);
             restartButton.addEventListener("click",resetGame,false);
@@ -89,7 +92,11 @@ and open the template in the editor.
                     ctx.strokeRect(j * 40, i * 40, 40, 40);
                 }
             }
-            
+            function undoSelect(){
+                currentCol--;
+                board[currentRow][currentCol] = 0;
+                updatePaint();
+            }
             function resetGame(){
                 currentRow = 0;
                 currentCol = 0;
