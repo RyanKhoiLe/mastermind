@@ -129,16 +129,17 @@ and open the template in the editor.
                         loseGame();
                         return;
                 }
-                for(var i = 0; i < board[0].length; i++){
-                    for(var j = 0; j < solution.length; j++){
-                        if(board[currentRow][i] === solution[j]){
+                for(var i = 0; i < solution.length; i++){
+                    for(var j = 0; j < board[0].length; j++){
+                        if(board[currentRow][j] === solution[i]){
                             corCol++;
                             if(i === j){
                                 corPos++;
                                 corCol--;
                             }
+                            i++;
                         }
-                        else if(board[currentRow][i] === 0){
+                        else if(board[currentRow][j] === 0){
                             zeroCount++;
                         }
                     }
