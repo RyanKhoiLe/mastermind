@@ -10,6 +10,12 @@ and open the template in the editor.
 body{
     background: black;
 }
+h1{
+    color: white;
+}
+p{
+    color: white;
+}
 #red {
     background-color: red;
     height: 25px;
