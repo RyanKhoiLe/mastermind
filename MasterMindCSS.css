@@ -9,25 +9,31 @@ and open the template in the editor.
 */
 #red {
     background-color: red;
-    height: 15px;
+    height: 25px;
+    width: 25px;
 }
 #orange {
     background-color: orange;
-    height: 15px;
+    height: 25px;
+    width: 25px;
 }
 #yellow {
     background-color: yellow;
-    height: 15px;
+    height: 25px;
+    width: 25px;
 }
 #blue{
     background-color: blue;
-    height: 15px;
+    height: 25px;
+    width: 25px;
 }
 #green{
     background-color: green;
-    height: 15px;
+    height: 25px;
+    width: 25px;
 }
 #purple{
     background-color: purple;
-    height: 15px;
+    height: 25px;
+    width: 25px;
 }
