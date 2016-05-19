@@ -16,6 +16,26 @@ h1{
 p{
     color: gray;
 }
+.btn {
+  background: #ffffff;
+  background-image: -webkit-linear-gradient(top, #ffffff, #c7bdff);
+  background-image: -moz-linear-gradient(top, #ffffff, #c7bdff);
+  background-image: -ms-linear-gradient(top, #ffffff, #c7bdff);
+  background-image: -o-linear-gradient(top, #ffffff, #c7bdff);
+  background-image: linear-gradient(to bottom, #ffffff, #c7bdff);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  -webkit-box-shadow: 0px 1px 3px #666666;
+  -moz-box-shadow: 0px 1px 3px #666666;
+  box-shadow: 0px 1px 3px #666666;
+  font-family: Arial;
+  color: #000000;
+  font-size: 28px;
+  padding: 11px 20px 10px 20px;
+  border: solid #000000 2px;
+  text-decoration: none;
+}
 #red {
     background-color: red;
     height: 25px;
