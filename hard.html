@@ -36,7 +36,7 @@ and open the template in the editor.
             <p>YOU MUST GET ALL THE COLORS RIGHT AS WELL AS THEIR POSITIONS <br>
             IF YOU CORRECTLY GUESS THE RIGHT COLOR IN THE RIGHT POSITION IT WILL TELL YOU ON THE LEFT <br>
             IF YOU CORRECTLY GUESS A COLOR BUT NOT IN THE RIGHT POSITION IT WILL TELL YOU ON THE RIGHT <br>
-            THERE ARE NO REPEATED COLORS IN THE PASSWORD <br>
+            THERE ARE REPEATED COLORS IN HARD MODE <br>
             CLICK CLEAR TO CLEAR THE ROW YOU ARE WORKING ON <br>
             CLICK CHECK ONCE YOU HAVE MADE YOUR GUESS FOR THAT ROW <br>
             CLICK RESTART TO START A NEW GAME <br></p>
@@ -86,7 +86,7 @@ and open the template in the editor.
                     ctx.strokeRect(j * 40, i * 40, 40, 40);
                 }
             }
-            
+            ctx.strokeStyle = "white";
             function resetGame(){
                 currentRow = 0;
                 currentCol = 0;
@@ -109,7 +109,7 @@ and open the template in the editor.
                         ctx.strokeRect(j * 40, i * 40, 40, 40);
                     }
                 }
-                ctx.fillStyle = "white";
+                ctx.fillStyle = "black";
                 ctx.fillRect(160,0,250,400);
                 ctx.fillRect(0,400,200,100);
                 display.innerHTML = "Turn: 1";
@@ -214,7 +214,7 @@ and open the template in the editor.
                                 ctx.fillStyle = "purple";
                                 break;
                             default:
-                                ctx.fillStyle = "white";
+                                ctx.fillStyle = "black";
                         }
                         ctx.fillRect(j * 40 + 10, i * 40 + 10, 20, 20);             
                     }
