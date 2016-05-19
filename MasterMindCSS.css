@@ -8,13 +8,13 @@ and open the template in the editor.
     Author     : frien, Khoi Le
 */
 body{
-    background: lightgray;
+    background: black;
 }
 h1{
-    color: black;
+    color: gray;
 }
 p{
-    color: black;
+    color: gray;
 }
 #red {
     background-color: red;
