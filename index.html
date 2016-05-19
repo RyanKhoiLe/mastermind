@@ -134,7 +134,7 @@ and open the template in the editor.
                         loseGame();
                         return;
                 }
-                for(var i = 0; i < solution.length; i++){
+                for(var i = 0; i < solution.length; i++){ //check all solutions for positions only, then color
                     for(var j = 0; j < board[0].length; j++){
                         if(board[currentRow][j] === solution[i]){
                             corCol++;
@@ -142,7 +142,7 @@ and open the template in the editor.
                                 corPos++;
                                 corCol--;
                             }
-                            i++;
+                            //i++;
                         }
                         else if(board[currentRow][j] === 0){
                             zeroCount++;
