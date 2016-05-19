@@ -37,13 +37,15 @@ and open the template in the editor.
         <canvas id="myCanvas" width="600" height="460">No canvas</canvas>
         <div id ="instructions">
             <h1>INSTRUCTIONS</h1>
-            <p>YOU MUST GET ALL THE COLORS RIGHT AS WELL AS THEIR POSITIONS <br>
-            IF YOU CORRECTLY GUESS THE RIGHT COLOR IN THE RIGHT POSITION IT WILL TELL YOU ON THE LEFT <br>
-            IF YOU CORRECTLY GUESS A COLOR BUT NOT IN THE RIGHT POSITION IT WILL TELL YOU ON THE RIGHT <br>
-            THERE ARE NO REPEATED COLORS IN THE PASSWORD <br>
-            CLICK CLEAR TO CLEAR THE ROW YOU ARE WORKING ON <br>
-            CLICK CHECK ONCE YOU HAVE MADE YOUR GUESS FOR THAT ROW <br>
-            CLICK RESTART TO START A NEW GAME <br></p>
+            <p>You must get all the colors right IN ORDER <br>
+            If you correctly guess the correct color AND in the right position, it will say on the left <br>
+            If you correctly guess the correct color but NOT the position, it will say on the right <br>
+            There are no repeated colors in the password <br>
+            Click clear to clear the entire row you are currently working on <br>
+            Click check to make your guess <br>
+            Click restart to start a new game <br>
+            Click undo to undo your last move
+            </p>
         </div>
         <script>
             var redButton = document.getElementById("red"); //1  
@@ -97,6 +99,9 @@ and open the template in the editor.
             }
             function undoSelect(){
                 currentCol--;
+                if(currentCol < 0){
+                    currentCol = 0;
+                }
                 board[currentRow][currentCol] = 0;
                 updatePaint();
             }
