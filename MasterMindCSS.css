@@ -16,7 +16,7 @@ h1{
 p{
     color: white;
 }
-.btn {
+button {
   background: #ffffff;
   background-image: -webkit-linear-gradient(top, #ffffff, #c7bdff);
   background-image: -moz-linear-gradient(top, #ffffff, #c7bdff);
