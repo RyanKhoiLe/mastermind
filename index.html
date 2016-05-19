@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title> MasterMind </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="MasterMindCSS.css" type="text/css">
+    </head>
+    <body>
+        <div> <h1>HELLO AND WELCOME TO MASTERMIND <br></h1>
+              <p>YOU HAVE 10 TRIES TO GUESS THE SECRET PASSWORD <br>
+                  CLICK ON THE COLORS TO INPUT YOUR GUESS FROM LEFT TO RIGHT <br></p>         
+            
+        </div>
+        <div id="UI">
+            <button id="red"></button>
+            <button id="orange"></button>
+            <button id="yellow"></button>
+            <button id="green"></button>
+            <button id="blue"></button>
+            <button id="purple"></button>
+            <button id="clear">CLEAR</button>
+            <button id="submit">CHECK</button>
+            <button id="restart">RESTART</button>
+            <p id="display"> Turn: 1 </p>
+        </div>
+        <canvas id="myCanvas" width="600" height="460">No canvas</canvas>
+        <div id ="instructions">
+            <h1>INSTRUCTIONS</h1>
+            <p>YOU MUST GET ALL THE COLORS RIGHT AS WELL AS THEIR POSITIONS <br>
+            IF YOU CORRECTLY GUESS THE RIGHT COLOR IN THE RIGHT POSITION IT WILL TELL YOU ON THE LEFT <br>
+            IF YOU CORRECTLY GUESS A COLOR BUT NOT IN THE RIGHT POSITION IT WILL TELL YOU ON THE RIGHT <br>
+            THERE ARE NO REPEATED COLORS IN THE PASSWORD <br>
+            CLICK CLEAR TO CLEAR THE ROW YOU ARE WORKING ON <br>
+            CLICK CHECK ONCE YOU HAVE MADE YOUR GUESS FOR THAT ROW <br>
+            CLICK RESTART TO START A NEW GAME <br></p>
+        </div>
+        <script>
+            var redButton = document.getElementById("red"); //1  
+            var orangeButton = document.getElementById("orange"); // 2
+            var yellowButton = document.getElementById("yellow"); // 3
+            var greenButton = document.getElementById("green"); // 4
+            var blueButton = document.getElementById("blue"); //5
+            var purpleButton = document.getElementById("purple"); //6
+            var clearButton = document.getElementById("clear"); 
+            var checkButton = document.getElementById("submit");
+            var restartButton = document.getElementById("restart");
+            var display = document.getElementById("display");
+            var solution = [];
+            var nums = [1,2,3,4,5,6];
+            
+            for(var i = 0; i < 4; i++){
+                var random = Math.floor(Math.random() * nums.length);
+                solution.push(nums[random]);
+                nums.splice(random,1);
+                console.log(solution);
+            }
+            
+            redButton.addEventListener("click",function(){addColor("red");},false);
+            orangeButton.addEventListener("click",function(){addColor("orange");},false);
+            yellowButton.addEventListener("click",function(){addColor("yellow");},false);
+            greenButton.addEventListener("click",function(){addColor("green");},false);
+            blueButton.addEventListener("click",function(){addColor("blue");},false);
+            purpleButton.addEventListener("click",function(){addColor("purple");},false);
+            
+            clearButton.addEventListener("click",clearRow,false);
+            checkButton.addEventListener("click",checkRow,false);
+            restartButton.addEventListener("click",resetGame,false);
+            
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            var currentRow = 0;
+            var currentCol = 0;
+            var corPos = 0;
+            var corCol = 0;
+            var board = [];
+            for(var i = 0; i < 10; i++){
+                board.push([0,0,0,0]);
+            }
+            for(var i = 0; i < board.length; i++){
+                for(var j = 0; j < board[0].length; j++){
+                    ctx.strokeRect(j * 40, i * 40, 40, 40);
+                }
+            }
+            
+            function resetGame(){
+                currentRow = 0;
+                currentCol = 0;
+                corPos = 0;
+                corCol = 0;
+                board = [];
+                for(var i = 0; i < 10; i++){
+                    board.push([0,0,0,0]);
+                }
+                for(var i = 0; i < board.length; i++){
+                    for(var j = 0; j < board[0].length; j++){
+                        ctx.strokeRect(j * 40, i * 40, 40, 40);
+                    }
+                }
+                ctx.fillStyle = "white";
+                ctx.fillRect(160,0,250,400);
+                ctx.fillRect(0,400,200,100);
+                display.innerHTML = "Turn: 1";
+                updatePaint();
+            }
+            
+            function clearRow(){
+                for(var i = 0; i < board[0].length; i++){
+                    board[currentRow][i] = 0;
+                }
+                currentCol = 0;
+                updatePaint();
+            }
+            function checkRow(){
+                var zeroCount = 0;
+                if(currentRow > 8){
+                        loseGame();
+                        return;
+                }
+                for(var i = 0; i < board[0].length; i++){
+                    for(var j = 0; j < solution.length; j++){
+                        if(board[currentRow][i] === solution[j]){
+                            corCol++;
+                            if(i === j){
+                                corPos++;
+                                corCol--;
+                            }
+                        }
+                        else if(board[currentRow][i] === 0){
+                            zeroCount++;
+                        }
+                    }
+                }
+                console.log("Zero: " + zeroCount);
+                if(zeroCount < 16){
+                    ctx.strokeText("Right place: "+corPos + ", Right color: " + corCol,170, (currentRow + 1) * 40 - 20);
+                    currentRow++;
+                    display.innerHTML = "Turn: " + (currentRow + 1);
+                    if(corPos === 4){
+                        displayWin();
+                    }
+                    corPos = 0;
+                    corCol = 0;
+                    
+                    
+                    currentCol = 0; 
+                    
+                    
+                }
+            }
+            function addColor(color){
+                if(currentCol > 3){
+                    return;
+                }
+                switch(color){
+                    case "red":
+                        board[currentRow][currentCol] = 1;
+                        break;
+                    case "orange":
+                        board[currentRow][currentCol] = 2;
+                        break;
+                    case "yellow":
+                        board[currentRow][currentCol] = 3;
+                        break;
+                    case "green":
+                        board[currentRow][currentCol] = 4;
+                        break;
+                    case "blue":
+                        board[currentRow][currentCol] = 5;
+                        break;
+                    case "purple":
+                        board[currentRow][currentCol] = 6;
+                        break;
+                    default:
+                        board[currentRow][currentCol] = 0;
+                }
+                currentCol++;
+                updatePaint();
+            }
+            function updatePaint(){
+                for(var i = 0; i < board.length; i++){
+                    for(var j = 0; j < board[0].length; j++){
+                        ctx.strokeRect(j * 40, i * 40, 40, 40);
+                        switch(board[i][j]){
+                            case 1:
+                                ctx.fillStyle = "red";
+                                break;
+                            case 2:
+                                ctx.fillStyle = "orange";
+                                break;
+                            case 3: 
+                                ctx.fillStyle = "yellow";
+                                break;
+                            case 4:
+                                ctx.fillStyle = "green";
+                                break;
+                            case 5:
+                                ctx.fillStyle = "blue";
+                                break;
+                            case 6:
+                                ctx.fillStyle = "purple";
+                                break;
+                            default:
+                                ctx.fillStyle = "white";
+                        }
+                        ctx.fillRect(j * 40 + 10, i * 40 + 10, 20, 20);             
+                    }
+                }
+            }
+            function displayWin(){
+                console.log('win');
+                ctx.strokeText("CONGRATS YOU WIN!",50, 450);
+                display.innerHTML = "YOU WON IN " + (currentRow) + "TURNS";
+            }
+            function loseGame(){
+                console.log('lose');
+                ctx.strokeText("SORRY YOU LOST!",50, 450);
+                display.innerHTML = "YOU LOST! THE SOLUTION WAS: " + solution;
+            }
+        </script>
+    </body>
+</html>

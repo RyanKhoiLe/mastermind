@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 18, 2016, 1:50:56 PM
+    Author     : frien, Khoi Le
+*/
+#red {
+    background-color: red;
+    height: 15px;
+}
+#orange {
+    background-color: orange;
+    height: 15px;
+}
+#yellow {
+    background-color: yellow;
+    height: 15px;
+}
+#blue{
+    background-color: blue;
+    height: 15px;
+}
+#green{
+    background-color: green;
+    height: 15px;
+}
+#purple{
+    background-color: purple;
+    height: 15px;
+}
