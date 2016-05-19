@@ -244,6 +244,31 @@ and open the template in the editor.
                 console.log('lose');
                 ctx.strokeText("SORRY YOU LOST!",50, 450);
                 display.innerHTML = "YOU LOST! THE SOLUTION WAS: " + solution;
+                for(var i = 0; i < solution.length; i++){
+                    switch(solution[i]){
+                        case 1:
+                                ctx.fillStyle = "red";
+                                break;
+                            case 2:
+                                ctx.fillStyle = "orange";
+                                break;
+                            case 3: 
+                                ctx.fillStyle = "yellow";
+                                break;
+                            case 4:
+                                ctx.fillStyle = "green";
+                                break;
+                            case 5:
+                                ctx.fillStyle = "blue";
+                                break;
+                            case 6:
+                                ctx.fillStyle = "purple";
+                                break;
+                            default:
+                                ctx.fillStyle = "black";
+                    }
+                    ctx.fillRect(300, 100 + 40 * i, 20, 20);
+                }
             }
         </script>
     </body>
